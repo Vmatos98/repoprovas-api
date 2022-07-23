@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  password  String
+}
+
+model Category{
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  name        String   
+  tests       Tests[]
+}
+
+model Disciplines{
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  name        String 
+  termId      Int 
+  term        Terms    @relation(fields: [termId], references: [id])
+  teachers    TeacherDisciplines[]
+  tests       Tests[]
+}
+
+model TeacherDisciplines{
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  teacherId     Int
+  disciplineId  Int
+  teacher       Teacher @relation(fields: [teacherId], references: [id])
+  discipline    Disciplines @relation(fields: [disciplineId], references: [id])
+  tests         Tests[]
+  @@unique([teacherId, disciplineId])
+}
+
+model Teacher{
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  name          String   
+  disciplines   TeacherDisciplines[]
+  tests         Tests[]
+
+}
+
+model Tests{
+  id                    Int      @id @default(autoincrement())
+  createdAt             DateTime @default(now())
+  name                  String
+  pdfUrl                String   
+  categoryId            Int 
+  teacherId             Int  
+  disciplineId          Int
+  teacher               Teacher @relation(fields: [teacherId], references: [id])
+  disciplines           Disciplines @relation(fields: [disciplineId], references: [id])  
+  category              Category @relation(fields: [categoryId], references: [id])
+  teacherDisciplines    TeacherDisciplines  @relation(fields: [teacherId, disciplineId], references: [teacherId, disciplineId])
+}
+
+model Terms{
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  number      Int
+  disciplines Disciplines[]
+}
