@@ -5,8 +5,24 @@ async function getAllCategories(){
     return await prisma.category.findMany();
 }
 
+async function getCategoryById(id:number){
+    return await prisma.category.findUnique({
+        where:{
+            id:id,
+        }
+    })
+}
+
 async function getAllDisciplines(){
     return await prisma.disciplines.findMany();
+}
+
+async function getDisciplineById(id:number){
+    return await prisma.disciplines.findUnique({
+        where:{
+            id:id,
+        }
+    })
 }
 
 async function getTeacherByDisciplines(disciplineId:number){
@@ -25,7 +41,18 @@ async function getTeacherByDisciplines(disciplineId:number){
     })
 }
 
+async function getTeacherById(id:number){
+    return await prisma.teacher.findUnique({
+        where:{
+            id:id,
+        }
+    })
+}
+
 export {getAllCategories,
     getAllDisciplines,
-    getTeacherByDisciplines
+    getTeacherByDisciplines,
+    getCategoryById,
+    getDisciplineById,
+    getTeacherById
 };
