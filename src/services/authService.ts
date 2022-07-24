@@ -3,13 +3,21 @@ import {User} from "@prisma/client"
 import * as authRepository from "../repositories/authRepository.js";
 
 export type createUserData = Omit<User, "id"|"createdAt">;
+export type searchUserData = Omit<createUserData,"password">;
 
 async function findUser(searchUserData:createUserData){
-    const user = await authRepository.findUser(searchUserData);
+    const email = searchUserData.email;
+    const user = await authRepository.findUser({email});
     if(bcrypt.compareSync(searchUserData.password, user.password)){
         return user;
     }
     throw { type: "unauthorized", message: "invalid email or password" };
+}
+
+async function findUserByEmail(searchUserData:searchUserData){
+    const email = searchUserData.email;
+    const user = await authRepository.findUser({email});
+    return user;
 }
 
 async function createUser(createUserData:createUserData){
@@ -22,5 +30,6 @@ async function createUser(createUserData:createUserData){
 
 export {
     findUser,
-    createUser
+    createUser,
+    findUserByEmail
 };

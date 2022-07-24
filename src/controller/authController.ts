@@ -11,6 +11,11 @@ async function login(req: Request, res: Response) {
 }
 
 async function sigin(req: Request, res: Response) {
+    const { email } = req.body;
+    const user = await User.findUserByEmail({email})
+    if(user){
+        throw { type: "conflict", message: "User already exists" };
+    }
     await User.createUser(req.body);
     res.sendStatus(201);
 }

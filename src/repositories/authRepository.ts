@@ -1,8 +1,8 @@
 import prisma from "../config/dataBase.js";
 
-import {createUserData} from "../services/authService.js";
+import {createUserData, searchUserData} from "../services/authService.js";
 
-async function findUser(searchUserData:createUserData){
+async function findUser(searchUserData:searchUserData){
     return await prisma.user.findFirst({
         where: {
             email: searchUserData.email
