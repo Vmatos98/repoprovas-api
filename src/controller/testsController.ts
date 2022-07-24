@@ -12,6 +12,21 @@ async function createTest(req:Request, res: Response) {
     res.sendStatus(201);
 }
 
+async function getTestsByGroup(req: Request, res: Response) {
+    const {groupBy} = req.query;
+    if(groupBy ==='disciplines'){
+        const data = await testsService.getTestsByDisciplines();
+        const result={
+            tests:data,
+        }
+        return res.status(200).send(result);
+    }
+        // throw{type: "bad_request", message: "not data found"};
+    
+    
+}
+
 export {
     createTest,
+    getTestsByGroup
 }

@@ -7,7 +7,23 @@ async function insertTests(createTestsData:createTestsData){
     });
 }
 
+async function getTestsByDiscipline(){
+    return await prisma.terms.findMany({
+        include:{
+            disciplines: {
+                include: {
+                    teachers:{include:{
+                        teacher:true,
+                        tests: {include: {category:true,}}
+                        }
+                    }
+                },
+            },
+        },
+    })
+}
 
 export {
     insertTests,
+    getTestsByDiscipline
 }

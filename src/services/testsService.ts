@@ -11,6 +11,15 @@ async function insertTests(createTestsData:createTestsData){
 
 }
 
+async function getTestsByDisciplines(){
+    const result = await repository.getTestsByDiscipline();
+    if(!result)
+    throw{type: "not_found", message: "not found"}
+
+    return result;
+}
+
 export {
     insertTests,
+    getTestsByDisciplines
 }

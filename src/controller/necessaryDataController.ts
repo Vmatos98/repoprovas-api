@@ -3,7 +3,7 @@ import * as service from "../services/necessaryDataService.js"
 
 async function getCategories(req: Request, res: Response){
     const categories = await service.getAllCategories();
-    res.status(200).send(categories);
+    res.status(200).send({categories:categories});
 }
 
 async function getDisciplines(req: Request, res: Response){

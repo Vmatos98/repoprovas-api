@@ -6,5 +6,6 @@ import jwtValidateMiddleware from '../middlewares/jwtValidateMiddleware.js';
 
 const testsRoute = Router();
 testsRoute.post('/tests', jwtValidateMiddleware, validateSchemasMiddleware(schemas.createTestSchema), controllers.createTest);
+testsRoute.get('/tests', jwtValidateMiddleware, controllers.getTestsByGroup);
 
 export default testsRoute;
