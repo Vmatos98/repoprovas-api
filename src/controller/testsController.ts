@@ -21,6 +21,10 @@ async function getTestsByGroup(req: Request, res: Response) {
         }
         return res.status(200).send(result);
     }
+    else if(groupBy ==='teachers'){
+        const result = await testsService.getTestsByTeachers();
+        return res.status(200).send({tests:result});
+    }
         // throw{type: "bad_request", message: "not data found"};
     
     

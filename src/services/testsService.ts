@@ -19,7 +19,16 @@ async function getTestsByDisciplines(){
     return result;
 }
 
+async function getTestsByTeachers(){
+    const result = await repository.getTestsByTeacher();
+    if(!result)
+    throw{type: "not_found", message: "not found"}
+
+    return result;
+}
+
 export {
     insertTests,
-    getTestsByDisciplines
+    getTestsByDisciplines,
+    getTestsByTeachers
 }
