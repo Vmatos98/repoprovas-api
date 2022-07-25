@@ -503,7 +503,7 @@ npm start
 #
 ## testes 
 
-### testes manuais com Thunde Client:
+### testes manuais com Thunder Client:
 
 > Na pasta ThunderClient há um arquivo json para ser importado pelo thunderClient<br/>
 > Já está configurado com o body das requisições<br/>
