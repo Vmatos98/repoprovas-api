@@ -32,9 +32,9 @@ cd repoprovas-api
 ~~~
 npm i
 ~~~
-para teste em desenvolvimento:
+para testes em desenvolvimento:
 ~~~
-npm run test
+npm run dev
 ~~~
 para execução em produção:
 ~~~
