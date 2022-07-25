@@ -1,16 +1,16 @@
 import supertest from "supertest";
 import app from "../src/app.js"
 import prisma from "../src/config/dataBase.js";
-import {login} from "./auth.test.js"
+
 let token= '';
+const email = 'test2@root.com';
 
 beforeAll(async () => {
-    await supertest(app).post('/sigin').send(login);
-    const response = await supertest(app).post('/login').send({email:"admin@root.com",password:"senhaforte"});
-    token= response.body.token;
-    
-    // token = response.body.token;
-    
+    await prisma.$executeRaw`DELETE FROM public."User" WHERE email = ${email}`;
+
+    await supertest(app).post('/sigin').send({email:"test2@root.com", password:"senhaforte", confirmPassword:"senhaforte"});
+    const response = await supertest(app).post('/login').send({email:"test2@root.com",password:"senhaforte"});
+    token= response.body.token;    
 });
 
 describe("aget data tests suit", ()=>{
